@@ -12,8 +12,8 @@ This demo tests a dummy NodeJS-based Web API written with Swagger with [Gauge][_
 
 ## Running Gauge tests
 
-* `**$ npm start**`: Start the Swagger API server.
-* `**$ npm test**`: While the server is running, run Gauge tests (in another terminal).
+* `$ npm start`: Start the Swagger API server.
+* `$ npm test`: While the server is running, run Gauge tests (in another terminal).
 
 [_gauge]: http://getgauge.io
 [_gaugejs]: https://github.com/getgauge-contrib/gauge-js
