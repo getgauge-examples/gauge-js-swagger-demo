@@ -48,11 +48,14 @@ gauge.step("Retrieve messages and validate <msgs>", function(msgs, done) {
 
     assert.equal(msglist.length, body.length, "Match number of messages retrieved");
 
-    // Assert on the content body of the API response
-    body.forEach(function (item, i) {
-      var parsedmsg = JSON.parse(item).msg;
-      assert.equal(parsedmsg, msglist[i], "Match message " + parsedmsg);
-    });
+    if (msglist) {
+      // Assert on the content body of the API response
+      body.forEach(function (item, i) {
+        var parsedmsg = JSON.parse(item).msg;
+        assert.equal(parsedmsg, msglist[i], "Match message " + parsedmsg);
+      });
+    }
+
     done();
   });
 });

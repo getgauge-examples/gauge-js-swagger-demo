@@ -22,6 +22,15 @@
   | ohai     |
 
 
+## Empty message list
+
+* Send message "I shall be cleared"
+* Send message "I shall be cleared as well"
+* Clear messages
+* Retrieve messages and validate
+  | messages |
+  | -------- |
+
 ____
 
 * Clear messages
