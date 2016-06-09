@@ -27,9 +27,7 @@ paths:
       - application/json
       responses:
         '200':
-          description: Success message
-          schema:
-            $ref: '#/definitions/Messages'
+          $ref: '#/responses/MessageList'
     post:
       description: Write a new message
       consumes:
@@ -38,28 +36,36 @@ paths:
       - application/json
       parameters:
         - name: msg
-          in: query
+          in: body
           required: true
-          type: string
+          schema:
+            type: string
       responses:
         '200':
-          description: Success
+          $ref: '#/responses/Success'
     delete:
       description: Clear existing messages
       produces:
       - application/json
       responses:
         '200':
-          description: Success
+          $ref: '#/responses/Success'
 
 definitions:
-  Messages:
-    title: Messages
-    description: List of messages
-    type: array
-    items:
-      $ref: '#/definitions/Msg'
   Msg:
     title: Message
     description: A single message
     type: string
+
+responses:
+  Success:
+    description: Response sent on a success.
+    schema:
+      type: string
+  MessageList:
+    description: Response containing list of messages.
+    schema:
+      description: Message list
+      type: array
+      items:
+        $ref: '#/definitions/Msg'
