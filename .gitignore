@@ -45,6 +45,7 @@ node_modules
 /deploy/
 /logs/
 /reports/
+/.gauge/
 
 # Screenshot
 screenshot-test.png

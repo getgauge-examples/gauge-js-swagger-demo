@@ -2,41 +2,27 @@
 
 "use strict";
 
-var assert = require("assert");
-
-var vowels = ["a", "e", "i", "o", "u"];
-
-var numberOfVowels = function (word) {
-  var vowelArr = word.split("").filter(function (elem) { return vowels.indexOf(elem) > -1; });
-  return vowelArr.length;
-};
+var request = require("request"),
+    assert = require("assert");
+var SERVER = "http://localhost:10010/";
 
 // --------------------------
 // Gauge step implementations
 // --------------------------
 
-gauge.step("Vowels in English language are <vowels>.", function(vowelsGiven) {
-  assert.equal(vowelsGiven, vowels.join(""));
-});
-
-gauge.step("The word <word> has <number> vowels.", function(word, number) {
-  assert.equal(number, numberOfVowels(word));
-});
-
-gauge.step("Almost all words have vowels <table>", function(table) {
-  table.rows.forEach(function (row) {
-    assert.equal(numberOfVowels(row.cells[0]), parseInt(row.cells[1]));
+gauge.step("Say hello as <name> and expect message: <msg>", function(name, msg, done) {
+  // Send a HTTP request to the server
+  request.get({baseUrl: SERVER, uri: "/hello",  qs: { name: name } }, function (err, res, body) {
+    // If request had error, throw it
+    if (err) throw err;
+    // If the response received was HTTP Status 200, then proceed
+    if (res.statusCode === 200) {
+      // Assert on the content body of the API response
+      assert.equal(JSON.stringify(msg), body);
+      done();
+    } else {
+      // Throw error otherwise
+      throw new Error("API response was not 200");
+    }
   });
 });
-
-// ---------------
-// Execution Hooks
-// ---------------
-
-gauge.hooks.beforeScenario(function () {
-  assert.equal(vowels.join(""), "aeiou");
-});
-
-gauge.hooks.beforeScenario(function () {
-  assert.equal(vowels[0], "a");
-}, { tags: [ "single word" ]});

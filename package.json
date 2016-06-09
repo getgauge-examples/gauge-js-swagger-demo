@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "description": "Demo of testing Swagger API with Gauge in JavaScript",
   "scripts": {
-    "start": "swagger project start api",
+    "setup": "cd server && npm install",
+    "start": "npm run setup && swagger project start server",
     "test": "gauge specs/"
   },
   "repository": {
@@ -14,12 +15,16 @@
     "getgauge",
     "swagger",
     "api",
-    "testing"
+    "testing",
+    "demo"
   ],
   "author": "Kaustav Das Modak <kaustav.dasmodak@yahoo.co.in>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/getgauge/gauge-js-swagger-demo/issues"
   },
-  "homepage": "https://github.com/getgauge/gauge-js-swagger-demo#readme"
+  "homepage": "https://github.com/getgauge/gauge-js-swagger-demo#readme",
+  "dependencies": {
+    "request": "^2.72.0"
+  }
 }
