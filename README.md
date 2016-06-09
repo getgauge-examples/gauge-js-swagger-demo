@@ -1,7 +1,5 @@
 # Demo of testing Swagger Web API with Gauge JS
 
-**Status: Incomplete**
-
 This demo tests a dummy NodeJS-based Web API written with Swagger with [Gauge][_gauge], using the [JavaScript][_gaugejs] language runner.
 
 ## Setting up
