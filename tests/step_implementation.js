@@ -5,7 +5,7 @@
 var request = require("request"),
     assert = require("assert");
 
-var SERVER = "http://localhost:10010/";
+var SERVER = process.env.API_BASE;
 
 /**
  * Step implementation to send messages
