@@ -1,1 +1,1 @@
-# Skeleton project for Swagger
+# API Server for Gauge Swagger demo
