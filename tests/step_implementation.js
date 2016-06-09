@@ -4,25 +4,76 @@
 
 var request = require("request"),
     assert = require("assert");
+
 var SERVER = "http://localhost:10010/";
 
-// --------------------------
-// Gauge step implementations
-// --------------------------
-
-gauge.step("Say hello as <name> and expect message: <msg>", function(name, msg, done) {
+/**
+ * Step implementation to send messages
+ */
+gauge.step("Send message <msg>", function(msg, done) {
   // Send a HTTP request to the server
-  request.get({baseUrl: SERVER, uri: "/hello",  qs: { name: name } }, function (err, res, body) {
+  request({ method: "POST", baseUrl: SERVER, uri: "/messages",  json: { msg: msg } }, function (err, res, body) {
     // If request had error, throw it
-    if (err) throw err;
-    // If the response received was HTTP Status 200, then proceed
-    if (res.statusCode === 200) {
-      // Assert on the content body of the API response
-      assert.equal(JSON.stringify(msg), body);
-      done();
-    } else {
-      // Throw error otherwise
-      throw new Error("API response was not 200");
+    if (err) {
+      throw err;
     }
+    // If the response received was HTTP Status 200, then proceed
+    if (res.statusCode !== 200) {
+      throw new Error("HTTP Status " + res.statusCode + ". " + body);
+    }
+    // Assert on the content body of the API response
+    assert.equal("Ok", body);
+    done();
+  });
+});
+
+
+/**
+ * Step implementation to retrieve messages
+ */
+gauge.step("Retrieve messages and validate <msgs>", function(msgs, done) {
+  var msglist = msgs.rows.map(function (row) {
+    return row.cells[0];
+  });
+  // Send a HTTP request to the server
+  request({ baseUrl: SERVER, uri: "/messages", json: true }, function (err, res, body) {
+    // If request had error, throw it
+    if (err) {
+      throw err;
+    }
+    // If the response received was HTTP Status 200, then proceed
+    if (res.statusCode !== 200) {
+      throw new Error("HTTP Status " + res.statusCode + ". " + body);
+    }
+
+    assert.equal(msglist.length, body.length, "Match number of messages retrieved");
+
+    // Assert on the content body of the API response
+    body.forEach(function (item, i) {
+      var parsedmsg = JSON.parse(item).msg;
+      assert.equal(parsedmsg, msglist[i], "Match message " + parsedmsg);
+    });
+    done();
+  });
+});
+
+
+/**
+ * Step implementation to clear messages buffer
+ */
+gauge.step("Clear messages", function(done) {
+  // Send a HTTP request to the server
+  request({ method: "DELETE", baseUrl: SERVER, uri: "/messages",  json: true }, function (err, res, body) {
+    // If request had error, throw it
+    if (err) {
+      throw err;
+    }
+    // If the response received was HTTP Status 200, then proceed
+    if (res.statusCode !== 200) {
+      throw new Error("HTTP Status " + res.statusCode + ". " + body);
+    }
+    // Assert on the content body of the API response
+    assert.equal("Ok", body);
+    done();
   });
 });

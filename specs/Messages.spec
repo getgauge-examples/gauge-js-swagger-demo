@@ -20,3 +20,8 @@
   | hi       |
   | hello    |
   | ohai     |
+
+
+____
+
+* Clear messages
