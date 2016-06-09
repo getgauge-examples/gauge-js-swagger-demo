@@ -10,6 +10,7 @@ This demo tests a dummy NodeJS-based Web API written with Swagger with [Gauge][_
 * Install [NodeJS][_node].
 * Install Swagger: `$ sudo npm install -g swagger`
 * Install [Gauge JS][_gaugejs] runner: `$ gauge --install js`
+* In the project root directory, run: `$ npm install`
 
 ## Running Gauge tests
 
