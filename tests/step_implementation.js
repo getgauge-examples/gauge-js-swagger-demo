@@ -22,6 +22,7 @@ gauge.step("Send message <msg>", function(msg, done) {
       if (res.statusCode !== 200) {
         throw new Error("HTTP Status " + res.statusCode + ". " + body);
       }
+
       // Assert on the content body of the API response
       assert.equal("Ok", body);
       done();
@@ -51,6 +52,7 @@ gauge.step("Retrieve messages and validate <msgs>", function(msgs, done) {
         throw new Error("HTTP Status " + res.statusCode + ". " + body);
       }
 
+      gauge.message("Response received: " + body);
       assert.equal(msglist.length, body.length, "Match number of messages retrieved");
 
       if (msglist) {
@@ -83,6 +85,7 @@ gauge.step("Clear messages", function(done) {
       if (res.statusCode !== 200) {
         throw new Error("HTTP Status " + res.statusCode + ". " + body);
       }
+
       // Assert on the content body of the API response
       assert.equal("Ok", body);
       done();
